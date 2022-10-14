@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
+    <title>plainify</title>
+    <style type="text/css">
+        body {
+            height: 100%;
+        }
+
+        textarea {
+            font-family: 'Fira Mono', monospace;
+            font-size: 12pt;
+            width: 100%;
+            height: 100vw;
+        }
+    </style>
+
+</head>
+
+<body>
+    <textarea type="text" id="txtarea"></textarea>
+</body>
+
+
+<script type="text/javascript">
+    function stripNonPrintableAndNormalize(text) {
+
+        text = text.replace(/\n\r/g, '\n');
+        text = text.replace(/[\u0000-\u0009]/gu, ' ');
+        text = text.replace(/[\u000b-\u000c]/gu, ' ');
+        text = text.replace(/[\u000e-\u001f]/gu, ' ');
+        text = text.replace(/\u2063/gu, ' ');
+
+        text = text.replace(/\p{Zl}/gu, '\n');
+        text = text.replace(/\p{Zp}/gu, '\n');
+        text = text.replace(/\p{Zs}/gu, ' ');
+        return text;
+    }
+
+    var area = document.getElementById('txtarea');
+
+    area.addEventListener('input', function () {
+        area.value = stripNonPrintableAndNormalize(area.value);
+    });
+
+    area.addEventListener('keyup', function () {
+        area.value = stripNonPrintableAndNormalize(area.value);
+    })
+</script>
+
+
+</html>
